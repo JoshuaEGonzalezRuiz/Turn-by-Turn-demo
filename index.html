@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--HERE Services-->
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-core.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-service.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-mapevents.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://js.api.here.com/v3/3.1/mapsjs-ui.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.1/mapsjs-ui.css">
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+
+    <!--HERE Services-->
+
+    <!--HERE FUNCTIONS FOR DECODE A POLYGON-->
+
+    <script src="./js/decodePolygon.js" type="text/javascript"></script>
+
+    <!--HERE FUNCTIONS FOR DECODE A POLYGON-->
+
+    <script src="./js/constants.js" type="text/javascript"></script>
+    <script src="./js/icon_data.js" type="text/javascript"></script>
+
+
+    <title>Turn-by-turn navigation</title>
+</head>
+
+<body>
+
+    <div id="divMap" class="divMap">
+    </div>
+
+    <div id="divDirections" class="divGeneral" style="display: block;">
+        <label id="lblDirections" for="divSubDirections" style="font-size: 20px;"> Directions: </label>
+        <div id="divInptDirections">
+            <div class="divDirections">
+                <label for="ipt_from"> From: </label>
+                <input class="ipt_directions" id="ipt_from" list="list_from_suggestions" onkeyup="iptChecks(this.id)"
+                    placeholder="Enter an address or zip code">
+            </div>
+
+            <div class="divDirections">
+                <label for="ipt_to"> To: </label>
+                <input class="ipt_directions" id="ipt_to" list="list_to_suggestions" onkeyup="iptChecks(this.id)"
+                    placeholder="Enter an address or zip code">
+            </div>
+        </div>
+
+        <div>
+            <datalist id="list_from_suggestions">
+            </datalist>
+        </div>
+
+        <div>
+            <datalist id="list_to_suggestions">
+            </datalist>
+        </div>
+
+        <p class="title">
+            Instructions: enter the addresses according to the corresponding fields or move the marker of each address
+            to obtain new results; you can toggle between views by clicking the title "Directions"
+        </p>
+        <!--<a href="https://www.flaticon.com/free-icons/starting-point" title="starting point icons">Starting point icons created by Creative Stall Premium - Flaticon</a>-->
+        <!--<a href="https://www.flaticon.com/free-icons/location" title="location icons">Location icons created by Freepik - Flaticon</a>-->
+        <!--<a href="https://www.flaticon.com/free-icons/walking" title="walking icons">Walking icons created by Freepik - Flaticon</a>-->
+    </div>
+
+    <div id="divCoordinates" class="divGeneral" style="display: none;">
+        <label id="lblCoords" for="divInptCoordinates" style="font-size: 20px;"> Coordinates: </label>
+        <div id="divInptCoordinates" class="divCoords">
+            <label for="divFromCoordinates"> From: </label>
+            <div id="divFromCoordinates" class="divDirectionsCoords">
+                <input id="ipt_from_lat" class="iptCoordinates" placeholder="Enter latitude">
+                <input id="ipt_from_lng" class="iptCoordinates" placeholder="Enter longitude">
+                <button type="submit" id="searchFrom" class="search"
+                    onclick="checkCoordsIpts(document.getElementById('ipt_from_lat'), document.getElementById('ipt_from_lng'), 'from')">
+                </button>
+            </div>
+
+            <label for="divToCoordinates"> To: </label>
+            <div id="divToCoordinates" class="divDirectionsCoords">
+                <input id="ipt_to_lat" class="iptCoordinates" placeholder="Enter latitude">
+                <input id="ipt_to_lng" class="iptCoordinates" placeholder="Enter longitude">
+                <button type="submit" id="searchTo" class="search"
+                    onclick="checkCoordsIpts(document.getElementById('ipt_to_lat'), document.getElementById('ipt_to_lng'), 'to')">
+                </button>
+            </div>
+        </div>
+        <p class="title">
+            Instructions: enter the coordinates according to the corresponding fields or move the marker of each
+            direction to obtain new results; you can toggle between views by clicking the title "Coordinates"
+        </p>
+    </div>
+
+    <div id="divRouteOptions" class="divGeneral" style="display: none;">
+        <input class="routeBtns" id="btnCar" type="button" value="Car" onclick="makeRoute(this.value)">
+        <input class="routeBtns" id="btnTruck" type="button" value="Truck" onclick="makeRoute(this.value)">
+        <input class="routeBtns" id="btnPedestrian" type="button" value="Pedestrian" onclick="makeRoute(this.value)">
+        <input class="routeBtns" id="btnBicycle" type="button" value="Bicycle" onclick="makeRoute(this.value)">
+        <input class="routeBtns" id="btnScooter" type="button" value="Scooter" onclick="makeRoute(this.value)">
+        <input class="routeBtns" id="btnTaxi" type="button" value="Taxi" onclick="makeRoute(this.value)">
+        <input class="routeBtns" id="btnBus" type="button" value="Bus" onclick="makeRoute(this.value)">
+    </div>
+
+    <div id="divTotals" class="divGeneral" style="display: none;">
+        <label id="titleSummary" for="divDescriptions">Summary:</label>
+        <div id="divDescriptions" class="divCoords">
+            <label for="lblTimeDuration">Total duration:</label>
+            <p id="lblTimeDuration">00 d 00 h 00 min 00 sec</p>
+            <label for="lblLength">Total length:</label>
+            <p id="lblLength">00.00 km</p>
+        </div>
+    </div>
+
+    <script src="./js/services.js" type="text/javascript"></script>
+
+</body>
+
+</html>
